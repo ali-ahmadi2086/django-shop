@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <br>
+    <br>
+
+    <h2 class="text-center"> ثبت نام </h2>
+
+     <div class="container mt-3">
+        <div class="col-md-7">
+            <form action="{% url 'accounts:user_register' %}" method="post">
+      {% csrf_token %}
+    <div class="mb-3">
+        <label class="mb-3" for="pwd"> نام کامل:</label>
+        {{ form.full_name }}
+    </div>
+    <div class="mb-3 mt-3">
+        <label class="mb-3" for="email">شماره تلفن:</label>
+        {{ form.phone }}
+    </div>
+    <div class="mb-3 mt-3">
+        <label class="mb-3" for="email">ایمیل:</label>
+        {{ form.email }}
+    </div>
+    <div class="mb-3">
+        <label class="mb-3" for="pwd">رمز عبور:</label>
+        {{ form.password }}
+    </div>
+    <div class="mb-3">
+        <label class="mb-3" for="pwd">تکرار رمز عبور:</label>
+        {{ form.password2 }}
+    </div>
+   <p> حساب کاربری دارید؟<a href="{% url 'accounts:user_login' %}">ورود</a></p>
+    <button type="submit" class="btn btn-secondary">ثبت نام</button>
+  </form>
+        </div>
+</div>
+    <br>
+    <br>
+
+{% endblock %}

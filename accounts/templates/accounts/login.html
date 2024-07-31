@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <br>
+
+    <div class="container mt-3">
+    <div class="col-md-7">
+        <h2 class="text-center">Login page</h2>
+        <br>
+        <br>
+        <form action="{% url 'accounts:user_login' %}" method="post">
+              {% csrf_token %}
+            <div class="mb-3 mt-3">
+              <label class="mb-3" for="email">شماره تلفن:</label>
+              {{ form.phone }}
+            </div>
+            <div class="mb-3">
+              <label class="mb-3" for="pwd">رمز عبور:</label>
+                {{ form.password }}
+            </div>
+            <div class="form-check mb-3">
+              <label class="form-check-label mb-1">
+                <input class="form-check-input" type="checkbox" name="remember">مرا به خاطر بسپار!
+              </label>
+            </div>
+            <p> حساب کاربری ایجاد کنید؟<a href="{% url 'accounts:user_register' %}">ثبت نام</a></p>
+            <button type="submit" class="btn btn-secondary">ورود</button>
+          </form>
+    </div>
+</div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+{% endblock %}

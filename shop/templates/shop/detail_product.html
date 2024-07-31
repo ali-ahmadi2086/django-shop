@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <br><br><br><br>
+    <div class="container mt-5">
+    <div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ product.picture.url }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">{{ product.description }}</p>
+            {% if product.is_sale %}
+            	 <p class="card-text"><small class="text-body-secondary">قیمت💰 : <strike>{{ product.price | intcomma }} </strike>تومان - {{ product.sale_price | intcomma }} تومان</small></p>
+            {% else %}
+                <p class="card-text"><small class="text-body-secondary">قیمت💰 : {{ product.price | intcomma }} تومان</small></p>
+            {% endif %}
+          <br>
+          <br>
+          <br>
+
+          <form action="{% url 'cart:cart_add' product.id %}" method="post" class="col-md-3">
+              {% csrf_token %}
+              {{ form }}<br>
+              <button class="add-to-cart btn btn-secondary" >اضافه کردن به سبد خرید</button>
+          </form>
+          <br>
+          <a href="{% url 'shop:home' %}" class="btn btn-secondary">بروبه صفحه اصلی </a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+{% endblock %}

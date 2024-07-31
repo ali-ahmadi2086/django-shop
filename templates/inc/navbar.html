@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+                
+     <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <button class="btn btn- dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              {% if user.is_authenticated %}
+              	<i class="material-icons">person_outline</i>{{ user.full_name }} 
+              {% else %}
+                  <i class="material-icons ">devices</i>ورود | ثبت نام  
+              {% endif %} 
+          </button>
+          <ul class="dropdown-menu dropdown-menu-">
+               {% if user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'accounts:user_logout' %}">خروج</a></li>
+               {% else %}
+                    <li><a class="dropdown-item" href="{% url 'accounts:user_login' %}">ورود</a></li>
+                    <li><a class="dropdown-item" href="{% url 'accounts:user_register' %}">ثبت نام</a></li>
+              {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+    
+    
+    
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="{% url 'shop:home' %}">G U Z A L<span style="color: #38c281">-Shop</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                
+                
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'shop:home' %}">خانه</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{%  url 'shop:about' %}">درباره ما</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'shop:category'  %}">دسته بندی</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="{% url 'shop:home' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">فروشگاه</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{% url 'shop:home' %}">همه محصولات</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="{% url 'shop:category'  %}">دسته بندی</a></li>
+                                <li><a class="dropdown-item" href="#!">محصولات جدید</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <a href="{% url 'cart:cart_summary' %}" class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            سبد خرید
+                            <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </nav>

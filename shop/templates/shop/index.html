@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load humanize %}
+
+        <!-- Header-->
+        <header class="bg-secondary py-3" >
+        {% include 'inc/messages.html' %}
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+{#                    <img class="mt-0" style="height: 100%; width: 100%;" src="{% static 'img/1.jpg' %}" alt="">#}
+                    <h1 class="display-4 fw-bolder"> G U Z A L -<span style="color: #38c281">Shop</span></h1>
+                    <p class="lead fw-normal text-white-50 mb-0">بهترین فروشگاه آنلاین در کشور</p>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+        <section class="py-5" >
+            <div class="container px-4 px-lg-5 mt-5">
+            <center class="mb-5"><h2>تمام محصولات</h2></center>
+                <hr>
+                <br>
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                    {% for product in products %}
+                        {% if product.is_sale %}
+                            <div class="col mb-5">
+                        <div class="card h-100" style="background-color: #f3f2f6">
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">تخفیف ویژه</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ product.picture.url }}"  alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{ product.name| truncatewords:5 }}</h5>
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                    {% with ''|center:product.star as range  %}
+                                    	{% for _ in range %}
+                                            <div class="bi-star-fill"></div>
+                                        {% endfor %}
+                                    {% endwith %}
+                                    </div>
+                                    <!-- Product price-->
+                                     <strike>{{ product.price | intcomma }}  تومان</strike><br>
+                                    {{ product.sale_price | intcomma }} تومان
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'shop:detail' product.id %}">برو به صفحه محصول</a></div>
+                            </div>
+                        </div>
+                    </div>
+                        {% else %}
+                             <div class="col mb-5">
+                        <div class="card h-100" style="background-color: #f3f2f6">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ product.picture.url }}"  alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{ product.name| truncatewords:8 }}</h5>
+                                     <div class="d-flex justify-content-center small text-warning mb-2">
+                                    {% with ''|center:product.star as range  %}
+                                    	{% for _ in range %}
+                                            <div class="bi-star-fill"></div>
+                                        {% endfor %}
+                                    {% endwith %}
+                                    </div>
+                                    <!-- Product price-->
+                                    {{ product.price | intcomma }} تومان
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'shop:detail' product.id %}">برو به صفحه محصول</a></div>
+                            </div>
+                        </div>
+                    </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+    <header class="bg-secondary py-3">
+        {% include 'inc/messages.html' %}
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">سبد خرید شما</h1>
+                <p class="lead fw-normal text-white-50 mb-0">محصولات باکیفیت و قیمت بصرفه</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <div class="col-md-12">
+            {% for item in cart %}
+                <div class="card mb-3">
+                    <img src="{{ item.product.picture.url }}" class="card-img-top" style="width: 100px; height: 100px;" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.product }}</h5>
+                    <br>
+                    <br>
+                        <form action="{% url 'cart:cart_update' item.product.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity_change" value="-1">
+                            <button type="submit" class="btn btn-outline-secondary" {% if item.quantity == 1 %} disabled{% endif %}>-</button>
+                        </form>
+                            <h6 class="card-text d-inline-block"> [ {{ item.quantity }} ] </h6>
+                        <form action="{% url 'cart:cart_update' item.product.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity_change" value="1">
+                            <button type="submit" class="btn btn-outline-secondary" {% if item.quantity == 10 %} disabled{% endif %}>+</button>
+                        </form>
+                        <br>
+                        <br>
+
+
+                        {% if item.product.is_sale %}
+                        	<p class="card-text"><small class="text-body-secondary">قیمت : <strike>{{ item.price|intcomma }}</strike> تومان</small></p>
+                            <p class="card-text"><small class="text-body-secondary">تخفیف : {{ item.sale_price|intcomma }}تومان</small></p>
+                        {% else %}
+                            <p class="card-text"><small class="text-body-secondary">قیمت : {{ item.price|intcomma }} تومان</small></p>
+                            <p class="card-text"><small class="text-body-secondary">تخفیف : 0 </small></p>
+                        {% endif %}
+
+                        <hr>
+                        <h6 class="card-text"><small class="text-body-secondary">جمع کل : {{ item.total_price|intcomma }} تومان</small></h6>
+                        <a class="btn btn-light" href="{% url 'cart:cart_remove' item.product.id %}">حذف</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="card text-sm-center">
+                <div class="card-header">
+                    برو به صفحه پرداخت.
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"> مبلغ قابل پرداخت : {{ cart.get_total_price|intcomma }} تومان </h5>
+                    <p class="card-text"></p>
+                    <a href="#" class="btn btn-primary">پرداخت</a>
+                </div>
+                <div class="card-footer text-body-secondary">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

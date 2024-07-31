@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load humanize %}
+
+        <!-- Header-->
+        <header class="bg-secondary py-3">
+        {% include 'inc/messages.html' %}
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder mb-4">دسته بندی محصولات</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">تنوع محصولات و کیفیت عالی</p>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {% for cat in category %}
+                        <div class="col mb-3">
+                            <div class="card h-100">
+                               <div class="card-body">
+                                   <h5 class="card-title text-center"><img class="align-items-center" src="{{ cat.picture.url }}" style="width: 100px; height: 70px;" alt=""></h5>
+                                   <h5 class="card-title text-center"><a style="text-decoration: none;" href="{% url 'shop:category_product' cat.name %}">{{ cat.name }}</a></h5>
+                                <p class="card-text"></p>
+                               </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    <br>
+    <br>
+    <br>
+
+
+{% endblock %}
